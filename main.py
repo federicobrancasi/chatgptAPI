@@ -17,15 +17,20 @@ def get_response(messages_list: list):
         messages=messages_list,
         temperature=1.0  # from 0.0 to 2.0
     )
-    return response
+    return response.choices[0].message
 
 
 # main
 if __name__ == "__main__":
     messages = [
-        {"role": "system", "content": "Sei un assistente virtuale chiamata Alice e la tua lingua è l'italiano."},
+        {"role": "system", "content": "Sei un assistente virtuale chiamato K e la tua lingua è l'italiano."},
     ]
-    user_input = input("\nTu: ")
-    messages.append({"role": "user", "content": user_input})
-    new_message = get_response(messages)
-    print(new_message)
+    try:
+        while True:
+            user_input = input("\nTu: ")
+            messages.append({"role": "user", "content": user_input})
+            new_message = get_response(messages)
+            print(f"\nK: {new_message['content']}")
+            messages.append(new_message)
+    except KeyboardInterrupt:
+        print("\n\nArrivederci!")
